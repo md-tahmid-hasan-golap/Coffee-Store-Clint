@@ -4,6 +4,10 @@ import Home from "../Components/Home";
 import AllCoffees from "../Components/AllCoffees";
 import SignIn from "../Components/SignIn";
 import Registation from "../Components/Registation";
+import PrivateRouter from "../Components/PrivateRouter";
+import AddCoffee from "../Components/AddCoffee";
+import MyAddedCoffees from "../Components/MyAddedCoffees";
+import MyOrders from "../Components/MyOrders";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +21,30 @@ const router = createBrowserRouter([
       {
         path: "/allCoffees",
         Component: AllCoffees,
+      },
+      {
+        path: "/addCoffee",
+        element: (
+          <PrivateRouter>
+            <AddCoffee></AddCoffee>
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/myAddedCoffes",
+        element: (
+          <PrivateRouter>
+            <MyAddedCoffees></MyAddedCoffees>
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/myOrders",
+        element: (
+          <PrivateRouter>
+            <MyOrders></MyOrders>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/signIn",

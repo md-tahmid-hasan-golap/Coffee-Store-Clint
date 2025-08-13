@@ -39,12 +39,48 @@ const Navbar = () => {
         to="/allCoffees"
         className={({ isActive }) =>
           isActive
-            ? "bg-blue-600 text-white rounded-md px-3 py-1 font-semibold transition-colors"
-            : "text-gray-700 px-3 py-1 rounded-md hover:bg-blue-200 hover:text-white transition-colors"
+            ? "bg-blue-600 text-white rounded-md px-3 py-1 font-semibold transition-colors mr-4"
+            : "text-gray-700 px-3 py-1 rounded-md hover:bg-blue-200 hover:text-white transition-colors mr-4"
         }
       >
         <li>All Coffee's</li>
       </NavLink>
+
+      {user && (
+        <>
+          <NavLink
+            to="/addCoffee"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-blue-600 text-white rounded-md px-3 py-1 font-semibold transition-colors mr-4"
+                : "text-gray-700 px-3 py-1 rounded-md hover:bg-blue-200 hover:text-white transition-colors mr-4"
+            }
+          >
+            <li>Add Coffee</li>
+          </NavLink>
+
+          <NavLink
+            to="/myAddedCoffes"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-blue-600 text-white rounded-md px-3 py-1 font-semibold transition-colors mr-4"
+                : "text-gray-700 px-3 py-1 rounded-md hover:bg-blue-200 hover:text-white transition-colors mr-4"
+            }
+          >
+            <li>My Added Coffee's</li>
+          </NavLink>
+          <NavLink
+            to="/myOrders"
+            className={({ isActive }) =>
+              isActive
+                ? "bg-blue-600 text-white rounded-md px-3 py-1 font-semibold transition-colors mr-4"
+                : "text-gray-700 px-3 py-1 rounded-md hover:bg-blue-200 hover:text-white transition-colors mr-4"
+            }
+          >
+            <li>My Orders</li>
+          </NavLink>
+        </>
+      )}
     </>
   );
   return (
@@ -84,7 +120,7 @@ const Navbar = () => {
         {user ? (
           <div className="flex items-center gap-2">
             <img
-              className="border border-blue-400 h-10 w-10 rounded-full"
+              className="border-1 border-green-600 h-10 w-10 rounded-full"
               src={user.photoURL}
               alt="User Avatar"
               title={user.displayName}
