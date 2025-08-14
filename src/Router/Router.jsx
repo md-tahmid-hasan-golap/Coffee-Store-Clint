@@ -8,6 +8,7 @@ import PrivateRouter from "../Components/PrivateRouter";
 import AddCoffee from "../Components/AddCoffee";
 import MyAddedCoffees from "../Components/MyAddedCoffees";
 import MyOrders from "../Components/MyOrders";
+import axios from "axios";
 
 const router = createBrowserRouter([
   {
@@ -16,10 +17,12 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader: () => axios("http://localhost:3000/coffees-limit"),
         Component: Home,
       },
       {
         path: "/allCoffees",
+        loader: () => axios("http://localhost:3000/coffees"),
         Component: AllCoffees,
       },
       {

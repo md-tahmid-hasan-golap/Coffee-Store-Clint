@@ -4,6 +4,7 @@ import Lottie from "lottie-react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../firebase/FirebaseAuthProvider";
 import { FcGoogle } from "react-icons/fc";
+import Swal from "sweetalert2";
 
 const Registation = () => {
   const { creatUser, SignInWithGoggle } = useContext(AuthContext);
@@ -31,6 +32,11 @@ const Registation = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        Swal.fire({
+          title: "Registation Successfully!",
+          icon: "success",
+          draggable: true,
+        });
         navigate("/");
       })
       .catch((error) => {

@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import Login from "../assets/Lottie/Login.json";
 import Lottie from "lottie-react";
+import Swal from "sweetalert2";
 
 const SignIn = () => {
   const { signInUser, SignInWithGoggle } = useContext(AuthContext);
@@ -28,6 +29,11 @@ const SignIn = () => {
     signInUser(email, password)
       .then((result) => {
         console.log(result.user);
+        Swal.fire({
+          title: "SignIn Successfully!",
+          icon: "success",
+          draggable: true,
+        });
         navigate("/");
       })
       .catch((error) => console.log(error));

@@ -1,7 +1,12 @@
-import React from "react";
-import { Link } from "react-router";
+import axios from "axios";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import { AuthContext } from "../firebase/FirebaseAuthProvider";
 
 const AddCoffee = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleAddCoffee = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -13,7 +18,37 @@ const AddCoffee = () => {
     const details = form.details.value;
     const photo = form.photo.value;
     // Console log
-    console.log({ name, quantity, supplier, taste, price, details, photo });
+    // console.log({ name, quantity, supplier, taste, price, details, photo });
+    const coffeeData = {
+      name,
+      quantity,
+      supplier,
+      taste,
+      price,
+      details,
+      photo,
+    };
+
+    coffeeData.email = user?.email;
+    coffeeData.likedBy = [];
+    // axios || fetch mathord
+    axios
+      .post("http://localhost:3000/coffees", coffeeData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            title: "Coffee Added Successfully!",
+            icon: "success",
+            draggable: true,
+            timer: 1500,
+          });
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="px-4 py-10 md:px-16 lg:px-24">
