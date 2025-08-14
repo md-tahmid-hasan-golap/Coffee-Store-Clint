@@ -9,6 +9,8 @@ import AddCoffee from "../Components/AddCoffee";
 import MyAddedCoffees from "../Components/MyAddedCoffees";
 import MyOrders from "../Components/MyOrders";
 import axios from "axios";
+import CoffeeDetails from "../Components/CoffeeDetails";
+import UpdateCoffee from "../Components/UpdateCoffee";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,26 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <AddCoffee></AddCoffee>
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/coffeesDetails/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/coffees-details/${params.id}`),
+        element: (
+          <PrivateRouter>
+            <CoffeeDetails></CoffeeDetails>
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/updateCoffee/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/coffees-details/${params.id}`),
+        element: (
+          <PrivateRouter>
+            <UpdateCoffee></UpdateCoffee>
           </PrivateRouter>
         ),
       },

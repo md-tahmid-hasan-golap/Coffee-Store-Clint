@@ -1,7 +1,40 @@
+import axios from "axios";
 import React from "react";
+import { GrView } from "react-icons/gr";
+import { MdDelete, MdOutlineModeEdit } from "react-icons/md";
+import { Link } from "react-router";
+import Swal from "sweetalert2";
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee, showActions = false }) => {
   const { _id, name, photo, price, quantity, supplier, taste } = coffee;
+  const handleDelete = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:3000/coffees-delete/${_id}`)
+          .then((res) => {
+            if (res.data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
 
   return (
     <div className="bg-white shadow-lg rounded-xl overflow-hidden transform hover:scale-105 transition duration-300">
@@ -25,16 +58,26 @@ const CoffeeCard = ({ coffee }) => {
         </p>
 
         {/* Optional Actions */}
-        <div className="flex gap-2 mt-4">
-          <button className="flex-1 bg-yellow-400 text-white font-semibold px-4 py-2 rounded-full shadow-md hover:bg-yellow-500 hover:shadow-lg transform hover:scale-105 transition-all duration-300">
-            View
-          </button>
-          <button className="flex-1 bg-green-400 text-white font-semibold px-4 py-2 rounded-full shadow-md hover:bg-green-500 hover:shadow-lg transform hover:scale-105 transition-all duration-300">
-            Edit
-          </button>
-          <button className="flex-1 bg-red-400 text-white font-semibold px-4 py-2 rounded-full shadow-md hover:bg-red-500 hover:shadow-lg transform hover:scale-105 transition-all duration-300">
-            Delete
-          </button>
+        <div className="flex gap-2 mt-4 justify-center">
+          <Link
+            to={`/coffeesDetails/${_id}`}
+            className="bg-yellow-400 text-white p-2 rounded-full shadow-md hover:bg-yellow-500 hover:shadow-lg transform hover:scale-110 transition-all duration-300"
+          >
+            <GrView size={25} />
+          </Link>
+          {showActions && (
+            <>
+              <Link
+                to={`/updateCoffee/${_id}`}
+                className="bg-green-400 text-white p-2 rounded-full shadow-md hover:bg-green-500 hover:shadow-lg transform hover:scale-110 transition-all duration-300"
+              >
+                <MdOutlineModeEdit size={25} />
+              </Link>
+              <button className="bg-red-400 text-white p-2 rounded-full shadow-md hover:bg-red-500 hover:shadow-lg transform hover:scale-110 transition-all duration-300">
+                <MdDelete onClick={() => handleDelete(_id)} size={25} />
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

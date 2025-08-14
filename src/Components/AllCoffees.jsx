@@ -5,7 +5,7 @@ import CoffeeCard from "./CoffeeCard";
 const AllCoffees = () => {
   const data = useLoaderData();
   const [coffees, setCoffees] = useState(data?.data || []);
-  console.log(data.data);
+  // console.log(data.data);
   return (
     <div className="my-7">
       <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center text-gray-800 my-6">
