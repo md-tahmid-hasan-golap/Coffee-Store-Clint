@@ -67,7 +67,7 @@ const UpdateCoffee = () => {
             d="M15 19l-7-7 7-7"
           />
         </svg>
-        Back To Home
+        Back To MyAddedCoffes
       </Link>
 
       {/* Heading */}
