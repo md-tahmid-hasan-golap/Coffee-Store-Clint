@@ -1,50 +1,45 @@
 import axios from "axios";
-import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router";
+import React from "react";
+import { Link, useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { AuthContext } from "../firebase/FirebaseAuthProvider";
 
-const AddCoffee = () => {
-  const { user } = useContext(AuthContext);
+const UpdatedCoffees = () => {
+  const coffees = useLoaderData();
   const navigate = useNavigate();
-  const handleAddCoffee = (e) => {
+  const { _id, name, price, details, taste, quantity, supplier, photo } =
+    coffees;
+  const handleUpdateCoffee = (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form.name.value;
-    const quantity = form.quantity.value;
-    const supplier = form.supplier.value;
-    const taste = form.taste.value;
-    const price = form.price.value;
-    const details = form.details.value;
-    const photo = form.photo.value;
 
-    const newCoffee = {
-      name,
-      quantity,
-      supplier,
-      taste,
-      price,
-      details,
-      photo,
+    const updatedCoffee = {
+      name: form.name.value,
+      quantity: form.quantity.value,
+      supplier: form.supplier.value,
+      taste: form.taste.value,
+      price: form.price.value,
+      details: form.details.value,
+      photo: form.photo.value,
     };
-    newCoffee.email = user?.email;
+
     axios
-      .post("http://localhost:3000/coffees", newCoffee)
+      .put(`http://localhost:3000/updadedCoffee/${_id}`, updatedCoffee)
       .then((res) => {
-        if (res.data.insertedId) {
+        if (res.data.modifiedCount) {
           Swal.fire({
-            title: "Coffee Added Successfully!",
+            title: "Upded Coffee Successfully!",
             icon: "success",
             draggable: true,
             timer: 1500,
           });
         }
-        navigate("/");
+        navigate("/myAddedCoffees");
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   return (
     <div className="px-4 py-10 md:px-16 lg:px-24">
       {/* Back Button */}
@@ -71,17 +66,17 @@ const AddCoffee = () => {
 
       {/* Heading */}
       <div className="p-6 md:p-12 text-center space-y-4">
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold">
-          Add Coffee
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#4B2E2E]">
+          Update Coffee
         </h1>
         <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto">
-          It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout.
+          Update the coffee information below. Make sure all details are correct
+          before submitting.
         </p>
       </div>
 
       {/* Form */}
-      <form onSubmit={handleAddCoffee} className="space-y-6">
+      <form onSubmit={handleUpdateCoffee} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Name */}
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4">
@@ -91,6 +86,7 @@ const AddCoffee = () => {
               name="name"
               className="input w-full"
               placeholder="Coffee Name"
+              defaultValue={name}
               required
             />
           </fieldset>
@@ -103,6 +99,7 @@ const AddCoffee = () => {
               name="quantity"
               className="input w-full"
               placeholder="Quantity"
+              defaultValue={quantity}
               required
             />
           </fieldset>
@@ -115,6 +112,7 @@ const AddCoffee = () => {
               name="supplier"
               className="input w-full"
               placeholder="Supplier"
+              defaultValue={supplier}
               required
             />
           </fieldset>
@@ -127,6 +125,7 @@ const AddCoffee = () => {
               name="taste"
               className="input w-full"
               placeholder="Taste"
+              defaultValue={taste}
               required
             />
           </fieldset>
@@ -139,6 +138,7 @@ const AddCoffee = () => {
               name="price"
               className="input w-full"
               placeholder="Price per Cup"
+              defaultValue={price}
               required
             />
           </fieldset>
@@ -151,6 +151,7 @@ const AddCoffee = () => {
               name="details"
               className="input w-full"
               placeholder="Details"
+              defaultValue={details}
               required
             />
           </fieldset>
@@ -164,6 +165,7 @@ const AddCoffee = () => {
             name="photo"
             className="input w-full"
             placeholder="Photo URL"
+            defaultValue={photo}
             required
           />
         </fieldset>
@@ -172,11 +174,11 @@ const AddCoffee = () => {
         <input
           type="submit"
           className="btn btn-primary w-full text-sm md:text-base"
-          value="Add Coffee"
+          value="Update Coffee"
         />
       </form>
     </div>
   );
 };
 
-export default AddCoffee;
+export default UpdatedCoffees;

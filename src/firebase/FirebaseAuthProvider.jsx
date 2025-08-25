@@ -47,7 +47,7 @@ const FirebaseAuthProvider = ({ children }) => {
     const unSuscribe = onAuthStateChanged(auth, (crueentUser) => {
       setUser(crueentUser);
       setLoading(false);
-      console.log(crueentUser);
+      // console.log(crueentUser);
     });
     return () => {
       unSuscribe();

@@ -8,6 +8,8 @@ import MyOrders from "../Components/MyOrders";
 import Register from "../Components/Register";
 import Login from "../Components/Login";
 import PrivateRouter from "../Components/PrivateRouter";
+import CoffeeDetails from "../Components/CoffeeDetails";
+import UpdadedCoffees from "../Components/UpdadedCoffees";
 
 const router = createBrowserRouter([
   {
@@ -16,10 +18,22 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader: () => fetch("http://localhost:3000/coffee-limit"),
         Component: Home,
       },
       {
+        path: "/coffee-details/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/coffees-details/${params.id}`),
+        element: (
+          <PrivateRouter>
+            <CoffeeDetails></CoffeeDetails>
+          </PrivateRouter>
+        ),
+      },
+      {
         path: "/allCoffees",
+        loader: () => fetch("http://localhost:3000/allCoffees"),
         Component: AllCoffees,
       },
       {
@@ -43,6 +57,16 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <MyOrders></MyOrders>
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/updadedCoffee/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/coffees-details/${params.id}`),
+        element: (
+          <PrivateRouter>
+            <UpdadedCoffees></UpdadedCoffees>
           </PrivateRouter>
         ),
       },
