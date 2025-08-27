@@ -4,6 +4,7 @@ import { useLoaderData } from "react-router";
 const CoffeeDetails = () => {
   const coffee = useLoaderData();
   const { name, price, details, taste, quantity, supplier, photo } = coffee;
+  const handleOrders = () => {};
 
   return (
     <div className="px-4 py-10 md:px-16 lg:px-24">
@@ -43,7 +44,10 @@ const CoffeeDetails = () => {
           </p>
 
           {/* Order Button */}
-          <button className="btn btn-primary mt-4 w-full md:w-auto">
+          <button
+            onClick={handleOrders}
+            className="btn btn-primary mt-4 w-full md:w-auto"
+          >
             Order Now
           </button>
         </div>

@@ -52,6 +52,7 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
       },
+
       {
         path: "/myOrders",
         element: (
@@ -60,6 +61,7 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
       },
+
       {
         path: "/updadedCoffee/:id",
         loader: ({ params }) =>
