@@ -21,6 +21,8 @@ const Navbar = () => {
         console.log(error);
       });
   };
+
+  // all links
   const links = (
     <>
       <li>
