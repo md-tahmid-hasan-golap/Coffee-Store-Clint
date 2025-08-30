@@ -1,10 +1,40 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
 import { useLoaderData } from "react-router";
+import { AuthContext } from "../firebase/FirebaseAuthProvider";
+import Swal from "sweetalert2";
 
 const CoffeeDetails = () => {
-  const coffee = useLoaderData();
-  const { name, price, details, taste, quantity, supplier, photo } = coffee;
-  const handleOrders = () => {};
+  const { user } = useContext(AuthContext);
+  const data = useLoaderData();
+  const [coffee, setCoffee] = useState(data);
+  const { _id, name, price, details, taste, quantity, supplier, photo } =
+    coffee;
+
+  // handle Orders
+  const handleOrders = () => {
+    const orderInfo = {
+      coffeeId: _id,
+      customarEmail: user?.email,
+    };
+    axios
+      .post(`http://localhost:3000/orders/${_id}`, orderInfo)
+      .then((res) => {
+        setCoffee((prev) => {
+          return { ...prev, quantity: prev.quantity - 1 };
+        });
+        if (res.data.insertedId) {
+          Swal.fire({
+            title: "Order Suessfully!",
+            icon: "success",
+            draggable: true,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="px-4 py-10 md:px-16 lg:px-24">
